@@ -17,43 +17,38 @@ def delete_user(request, user_id):
     user.delete()
     return redirect('manage_users')
 
-
-
-
 def manage_users(request, user_id=None):
     if user_id:
         user = User.objects.get(pk=user_id)
-        user_form = UserForm(instance=user)
-        profile_form = ProfileForm(instance=user.profile)
+        user_form = UserForm(request.POST or None, instance=user)
+        profile_form = ProfileForm(request.POST or None, instance=user.profile)
     else:
-        user_form = UserForm()
-        profile_form = ProfileForm()
+        user_form = UserForm(request.POST or None)
+        profile_form = ProfileForm(request.POST or None)
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=user if user_id else None)
-        profile_form = ProfileForm(request.POST, instance=user.profile if user_id else None)
-
         password = request.POST.get('password')
         password_confirm = request.POST.get('password_confirm')
 
-        if password and password == password_confirm:
-            if user_form.is_valid() and profile_form.is_valid():
-                try:
-                    user = user_form.save(commit=False)
-                    user.set_password(password)  # Set the password securely
-                    user.save()
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
 
-                    # Check if profile exists, update it if so, or create a new one.
-                    if not user.profile:
-                        profile = profile_form.save(commit=False)
-                        profile.user = user
-                        profile.save()
+            # Update password only if provided
+            if password and password == password_confirm:
+                user.set_password(password)
+            elif not password and user_id:
+                user.password = user.password  # Don't change the password if no new one is provided
 
-                    return redirect('manage_users')
-                except IntegrityError:
-                    user_form.add_error(None, "A profile for this user already exists.")
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
+            return redirect('manage_users')
         else:
-            user_form.add_error('password', 'Passwords do not match')
+            if password != password_confirm:
+                user_form.add_error('password', 'Passwords do not match')
 
     users = User.objects.all()
     return render(request, 'team/manage_users.html', {
@@ -61,3 +56,4 @@ def manage_users(request, user_id=None):
         'profile_form': profile_form,
         'users': users
     })
+
