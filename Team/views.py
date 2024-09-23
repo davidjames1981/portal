@@ -29,4 +29,9 @@ def manage_users(request, user_id=None):
     users = User.objects.all()
     return render(request, 'team/manage_users.html', {'form': form, 'users': users})
 
+def delete_user(request, user_id):
+    user = User.objects.get(id=user_id)
+    user.delete()  # This deletes the user but does not delete related records in other models
+    return redirect('manage_users')
+
 
