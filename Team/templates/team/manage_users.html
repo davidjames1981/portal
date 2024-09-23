@@ -6,6 +6,7 @@
     <div class="card mb-4">
         <div class="card-header">Manage User</div>
         <div class="card-body">
+
             <form method="POST" class="row mb-4">
                 {% csrf_token %}
                 <div class="col-md-6 mb-3">
@@ -24,22 +25,106 @@
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ user_form.email.value }}">
                 </div>
-            
-                <!-- Contractor Free-Type Text Field -->
                 <div class="col-md-6 mb-3">
                     <label for="contractor" class="form-label">Contractor</label>
                     <input type="text" class="form-control" id="contractor" name="contractor" value="{{ profile_form.contractor.value }}">
                 </div>
-            
                 <div class="col-md-6 mb-3">
                     <label for="mobile_number" class="form-label">Mobile Number</label>
                     <input type="text" class="form-control" id="mobile_number" name="mobile_number" value="{{ profile_form.mobile_number.value }}">
                 </div>
             
+                <!-- Password Fields -->
+                <div class="col-md-6 mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="password_confirm" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+                </div>
+            
+                <!-- Buttons -->
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" id="saveBtn" disabled>Save</button>
+                    <button type="button" class="btn btn-success" id="addBtn">Add</button>
+                    <button type="button" class="btn btn-secondary" id="clearBtn">Clear</button>
                 </div>
             </form>
+            
+            <!-- User Table -->
+            <div class="card">
+                <div class="card-header">Users List</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr class="user-row" data-user-id="{{ user.id }}" data-username="{{ user.username }}"
+                                data-first_name="{{ user.first_name }}" data-last_name="{{ user.last_name }}"
+                                data-email="{{ user.email }}" data-contractor="{{ user.profile.contractor }}"
+                                data-mobile_number="{{ user.profile.mobile_number }}">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-warning select-user">Select</button> <!-- Select button added -->
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- JavaScript to Handle Add, Enable, Clear -->
+            <script>
+                document.getElementById('addBtn').addEventListener('click', function () {
+                    // Reset the form for adding a new user and clear the fields
+                    clearForm();
+                    document.getElementById('saveBtn').disabled = false;
+                });
+            
+                document.getElementById('clearBtn').addEventListener('click', function () {
+                    // Clear the form fields
+                    clearForm();
+                    document.getElementById('saveBtn').disabled = true;
+                });
+            
+                function clearForm() {
+                    document.getElementById('username').value = '';
+                    document.getElementById('first_name').value = '';
+                    document.getElementById('last_name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('contractor').value = '';
+                    document.getElementById('mobile_number').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('password_confirm').value = '';
+                }
+            
+                document.querySelectorAll('.select-user').forEach(function (button) {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        // Fill in the form with selected user data
+                        const row = button.closest('tr');
+                        document.getElementById('username').value = row.getAttribute('data-username');
+                        document.getElementById('first_name').value = row.getAttribute('data-first_name');
+                        document.getElementById('last_name').value = row.getAttribute('data-last_name');
+                        document.getElementById('email').value = row.getAttribute('data-email');
+                        document.getElementById('contractor').value = row.getAttribute('data-contractor');
+                        document.getElementById('mobile_number').value = row.getAttribute('data-mobile_number');
+                        document.getElementById('saveBtn').disabled = false;
+                    });
+                });
+            </script>
+            
             
                       
         </div>
