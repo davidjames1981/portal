@@ -1,0 +1,33 @@
+<style>
+    #sidebar-wrapper {
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #f8f9fa;
+    }
+
+    #page-content-wrapper {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
+</style>
+<div class="d-flex">
+    <!-- Sidebar -->
+    <nav class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Your App</div>
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h1 class="mt-4">Your Content Here</h1>
+        </div>
+    </div>
+</div>
