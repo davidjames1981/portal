@@ -1,33 +1,101 @@
-<style>
-    #sidebar-wrapper {
-        width: 250px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background-color: #f8f9fa;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Professional App{% endblock %}</title>
+    
+    <!-- MDBootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    #page-content-wrapper {
-        margin-left: 250px;
-        width: calc(100% - 250px);
-    }
-</style>
-<div class="d-flex">
+    <style>
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #343a40; /* Dark color for a sleek look */
+            padding-top: 20px;
+        }
+
+        .sidebar .list-group-item {
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+        }
+
+        .sidebar .list-group-item:hover {
+            background-color: #495057;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .list-group-item.active {
+            background-color: #007bff;
+            border-radius: 10px;
+        }
+
+        .sidebar .list-group-item i {
+            margin-right: 10px;
+        }
+
+        /* Page content styling */
+        #page-content-wrapper {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Responsive sidebar toggle */
+        @media (max-width: 991px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            #page-content-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
     <!-- Sidebar -->
-    <nav class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Your App</div>
+    <nav id="sidebarMenu" class="sidebar">
         <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+            <a href="{% url 'home' %}" class="list-group-item list-group-item-action active">
+                <i class="fas fa-home"></i><span>Home</span>
+            </a>
+
+            <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+                <i class="fas fa-users"></i><span>Team</span> <!-- Changed to "Team" with people icon -->
+            </a>
+
+            <a href="{% url 'about' %}" class="list-group-item list-group-item-action">
+                <i class="fas fa-info-circle"></i><span>About</span>
+            </a>
+            <!-- Add more items -->
         </div>
     </nav>
-
+    
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <h1 class="mt-4">Your Content Here</h1>
-        </div>
+        {% block content %}
+        <!-- Your content goes here -->
+        {% endblock %}
     </div>
-</div>
+
+    <!-- MDBootstrap JS and FontAwesome JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+</body>
+</html>
