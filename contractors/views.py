@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Contractor
 from .forms import ContractorForm
+from django.shortcuts import render, redirect
+from .forms import ContractorForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def contractor_list(request):
     contractors = Contractor.objects.filter(is_archived=False)
     return render(request, 'contractors/contractor_list.html', {'contractors': contractors})
 
 
-from django.shortcuts import render, redirect
-from .forms import ContractorForm
-
-from django.contrib import messages
-
+@login_required
 def contractor_create_edit(request, contractor_id=None):
     contractor = None
     if contractor_id:
@@ -37,7 +39,7 @@ def contractor_create_edit(request, contractor_id=None):
     })
 
 
-
+@login_required
 def contractor_create(request):
     if request.method == 'POST':
         form = ContractorForm(request.POST)
@@ -51,7 +53,7 @@ def contractor_create(request):
     contractors = Contractor.objects.filter(is_archived=False)
     return render(request, 'contractors/contractor_form.html', {'form': form, 'contractors': contractors})
 
-
+@login_required
 def contractor_edit(request, pk):
     contractor = get_object_or_404(Contractor, pk=pk)
     if request.method == 'POST':
@@ -63,6 +65,7 @@ def contractor_edit(request, pk):
         form = ContractorForm(instance=contractor)
     return render(request, 'contractors/contractor_form.html', {'form': form})
 
+@login_required
 def contractor_archive(request, pk):
     contractor = get_object_or_404(Contractor, pk=pk)
     contractor.is_archived = True
