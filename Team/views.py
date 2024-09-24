@@ -5,6 +5,8 @@ from .forms import UserForm, ProfileForm
 from django.db import IntegrityError
 
 
+
+
 def home(request):
     return render(request, 'home.html')
 
@@ -16,6 +18,11 @@ def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
     return redirect('manage_users')
+
+
+
+
+
 
 def manage_users(request, user_id=None):
     if user_id:
@@ -30,14 +37,15 @@ def manage_users(request, user_id=None):
         password = request.POST.get('password')
         password_confirm = request.POST.get('password_confirm')
 
+        # Check if the forms are valid
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
 
-            # Update password only if provided
+            # Handle password update only if passwords match and are provided
             if password and password == password_confirm:
                 user.set_password(password)
             elif not password and user_id:
-                user.password = user.password  # Don't change the password if no new one is provided
+                user.password = user.password  # Keep existing password if no new password is provided
 
             user.save()
 
@@ -47,8 +55,9 @@ def manage_users(request, user_id=None):
 
             return redirect('manage_users')
         else:
-            if password != password_confirm:
-                user_form.add_error('password', 'Passwords do not match')
+            # Debugging: print form validation errors to the console
+            print(user_form.errors)
+            print(profile_form.errors)
 
     users = User.objects.all()
     return render(request, 'team/manage_users.html', {
@@ -56,4 +65,3 @@ def manage_users(request, user_id=None):
         'profile_form': profile_form,
         'users': users
     })
-

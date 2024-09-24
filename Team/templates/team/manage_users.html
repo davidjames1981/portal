@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
+{% if user_form.errors %}
+<div class="alert alert-danger">
+    {{ user_form.errors }}
+</div>
+{% endif %}
+
+{% if profile_form.errors %}
+<div class="alert alert-danger">
+    {{ profile_form.errors }}
+</div>
+{% endif %}
+
 
 {% block content %}
 <div class="container mt-5">
@@ -88,43 +100,50 @@
             
             <!-- JavaScript to Handle Add, Enable, Clear -->
             <script>
-                document.getElementById('addBtn').addEventListener('click', function () {
-                    // Reset the form for adding a new user and clear the fields
-                    clearForm();
-                    document.getElementById('saveBtn').disabled = false;
-                });
-            
-                document.getElementById('clearBtn').addEventListener('click', function () {
-                    // Clear the form fields
-                    clearForm();
-                    document.getElementById('saveBtn').disabled = true;
-                });
-            
-                function clearForm() {
-                    document.getElementById('username').value = '';
-                    document.getElementById('first_name').value = '';
-                    document.getElementById('last_name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('contractor').value = '';
-                    document.getElementById('mobile_number').value = '';
-                    document.getElementById('password').value = '';
-                    document.getElementById('password_confirm').value = '';
-                }
-            
-                document.querySelectorAll('.select-user').forEach(function (button) {
-                    button.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        // Fill in the form with selected user data
-                        const row = button.closest('tr');
-                        document.getElementById('username').value = row.getAttribute('data-username');
-                        document.getElementById('first_name').value = row.getAttribute('data-first_name');
-                        document.getElementById('last_name').value = row.getAttribute('data-last_name');
-                        document.getElementById('email').value = row.getAttribute('data-email');
-                        document.getElementById('contractor').value = row.getAttribute('data-contractor');
-                        document.getElementById('mobile_number').value = row.getAttribute('data-mobile_number');
-                        document.getElementById('saveBtn').disabled = false;
-                    });
-                });
+             document.getElementById('addBtn').addEventListener('click', function () {
+    // Reset the form for adding a new user and clear the fields
+    clearForm();
+    document.getElementById('saveBtn').disabled = false;  // Enable save button
+});
+document.getElementById('addBtn').addEventListener('click', function () {
+    // Clear the form for adding a new user
+    clearForm();
+    document.getElementById('saveBtn').disabled = false;  // Enable save button
+});
+
+document.getElementById('clearBtn').addEventListener('click', function () {
+    // Clear the form fields and disable save button
+    clearForm();
+    document.getElementById('saveBtn').disabled = true;   // Disable save button
+});
+
+function clearForm() {
+    document.getElementById('username').value = '';
+    document.getElementById('first_name').value = '';
+    document.getElementById('last_name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('contractor').value = '';
+    document.getElementById('mobile_number').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password_confirm').value = '';
+    document.getElementById('saveBtn').disabled = true;  // Disable save when cleared
+}
+
+document.querySelectorAll('.select-user').forEach(function (button) {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Fill in the form with selected user data
+        const row = button.closest('tr');
+        document.getElementById('username').value = row.getAttribute('data-username');
+        document.getElementById('first_name').value = row.getAttribute('data-first_name');
+        document.getElementById('last_name').value = row.getAttribute('data-last_name');
+        document.getElementById('email').value = row.getAttribute('data-email');
+        document.getElementById('contractor').value = row.getAttribute('data-contractor');
+        document.getElementById('mobile_number').value = row.getAttribute('data-mobile_number');
+        document.getElementById('saveBtn').disabled = false;  // Enable save button after user selection
+    });
+});
+
             </script>
             
             
@@ -132,35 +151,7 @@
         </div>
     </div>
 
-    <!-- User Table -->
-    <div class="card">
-        <div class="card-header">Users List</div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                    <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>
-                            <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="{% url 'delete_user' user.id %}" class="btn btn-sm btn-danger" 
-                               onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+   
     </div>
 </div>
 {% endblock %}
