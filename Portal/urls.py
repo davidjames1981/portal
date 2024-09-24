@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.home, name='home'),  # Home page showing contractor list
     path('about/', views.about, name='about'),
     path('contractors/', include('contractors.urls')),  # Include the contractors app's URLs
+    path('users/', include('users.urls')),  # Include the contractors app's URLs
 ]

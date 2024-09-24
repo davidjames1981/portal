@@ -80,7 +80,9 @@
             <a href="{% url 'contractor_create' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'contractor_create' %}active{% endif %}">
                 <i class="fas fa-building"></i><span>Contractors</span>
             </a>
-           
+            <a href="{% url 'users' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'users' %}active{% endif %}">
+                <i class="fas fa-building"></i><span>users</span>
+            </a>
 
             <a href="{% url 'about' %}" class="list-group-item list-group-item-action">
                 <i class="fas fa-info-circle"></i><span>About</span>
