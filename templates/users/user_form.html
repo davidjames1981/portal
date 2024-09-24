@@ -1,5 +1,76 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Welcome to the users page</h1>
+<div class="container mt-5">
+    <!-- Card for Adding/Editing User -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>{% if user_obj %}Edit User{% else %}Add New User{% endif %}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ form.first_name.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ form.last_name.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">
+                        {% if user_obj %}Save Changes{% else %}Add User{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Card for Listing Existing Users -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Existing Users</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <a href="{% url 'user_edit' user.id %}" class="btn btn-info btn-sm">Edit</a>
+                            <a href="{% url 'user_archive' user.id %}" class="btn btn-warning btn-sm">Archive</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No users available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
