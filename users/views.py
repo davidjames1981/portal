@@ -15,7 +15,14 @@ def user_create_edit(request, user_id=None):
     if request.method == 'POST':
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+
+            # Set password only if a new password has been provided
+            password = form.cleaned_data.get('password')
+            if password:
+                user.set_password(password)
+
+            user.save()
             if user_id:
                 messages.success(request, 'User updated successfully!')
             else:
@@ -28,8 +35,9 @@ def user_create_edit(request, user_id=None):
     return render(request, 'users/user_form.html', {
         'form': form,
         'users': users,
-        'user_obj': user  # For checking if we are editing
+        'user_obj': user
     })
+
 
 def user_archive(request, user_id):
     user = get_object_or_404(User, id=user_id)
