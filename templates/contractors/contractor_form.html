@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Display Messages -->
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    
+<div class="container mt-5">
+    <!-- Card for Adding/Editing Contractor -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>{% if contractor %}Edit Contractor{% else %}Add New Contractor{% endif %}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label for="company_name" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" value="{{ form.company_name.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="contact_name" class="form-label">Contact Name</label>
+                    <input type="text" class="form-control" id="contact_name" name="contact_name" value="{{ form.contact_name.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="contact_email" class="form-label">Contact Email</label>
+                    <input type="email" class="form-control" id="contact_email" name="contact_email" value="{{ form.contact_email.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="contact_phone" class="form-label">Contact Phone</label>
+                    <input type="text" class="form-control" id="contact_phone" name="contact_phone" value="{{ form.contact_phone.value|default_if_none:'' }}">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">
+                        {% if contractor %}Save Changes{% else %}Add Contractor{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Card for Listing Existing Contractors -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 >Existing Contractors</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Contact Name</th>
+                        <th>Contact Email</th>
+                        <th>Contact Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contractor in contractors %}
+                    <tr>
+                        <td>{{ contractor.company_name }}</td>
+                        <td>{{ contractor.contact_name }}</td>
+                        <td>{{ contractor.contact_email }}</td>
+                        <td>{{ contractor.contact_phone }}</td>
+                        <td>
+                                <a href="{% url 'contractor_edit' contractor.id %}" class="btn btn-info btn-sm">Edit</a>
+                                <a href="{% url 'contractor_archive' contractor.id %}" class="btn btn-warning btn-sm">Archive</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No contractors available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
