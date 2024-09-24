@@ -27,6 +27,20 @@
                     <input type="email" class="form-control" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}">
                 </div>
                 <div class="col-md-6">
+                    <label for="mobile_phone" class="form-label">Mobile Phone</label>
+                    <input type="text" class="form-control" id="mobile_phone" name="mobile_phone" value="{{ form.mobile_phone.value|default_if_none:'' }}">
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="company" class="form-label">Company</label>
+                    <select class="form-select" id="company" name="company">
+                        <option value="">Select a company</option>
+                        {% for contractor in form.company.field.queryset %}
+                            <option value="{{ contractor.id }}" {% if contractor.id == form.company.value %}selected{% endif %}>{{ contractor.company_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
