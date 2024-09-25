@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY") #'django-insecure-=jjm^8!+$6q%vw1%kz*g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get["ALLOWED_HOST"].split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(" ")
 
 
 LOGIN_URL = '/login/'
@@ -78,7 +78,6 @@ DATABASES = {
 }
 
 dj_database_url = os.environ.get("DATABASE_URL")
-
 DATABASES["default"] = dj_database_url.parse(dj_database_url)
 
 
