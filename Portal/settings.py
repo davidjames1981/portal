@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY") #'django-insecure-=jjm^8!+$6q%vw1%kz*g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 LOGIN_URL = '/login/'
