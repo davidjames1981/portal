@@ -78,9 +78,9 @@ DATABASES = {
 }
 
 
-database_url = os.environ.get("DATABASE_URL")
+#database_url = os.environ.get("DATABASE_URL")
 
-DATABASES["default"] = dj_database_url.parse(database_url)
+DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a/db_messaround")
 
 #dj_database_url = os.environ.get("DATABASE_URL")
 
