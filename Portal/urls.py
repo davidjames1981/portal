@@ -3,6 +3,8 @@ from django.urls import path, include
 from contractors import views  # Import views from the contractors app
 from . import views
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
