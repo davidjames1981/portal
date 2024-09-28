@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
+app_name ='users'
+
 urlpatterns = [
 
     path('', views.user_create_edit, name='user_create'),  # This handles both create and list

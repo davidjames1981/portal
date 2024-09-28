@@ -71,8 +71,8 @@
                         <td>{{ contractor.contact_email }}</td>
                         <td>{{ contractor.contact_phone }}</td>
                         <td>
-                                <a href="{% url 'contractor_edit' contractor.id %}" class="btn btn-info btn-sm">Edit</a>
-                                <a href="{% url 'contractor_archive' contractor.id %}" class="btn btn-warning btn-sm">Archive</a>
+                                <a href="{% url 'contractors:contractor_edit' contractor.id %}" class="btn btn-info btn-sm">Edit</a>
+                                <a href="{% url 'contractors:contractor_archive' contractor.id %}" class="btn btn-warning btn-sm">Archive</a>
                         </td>
                     </tr>
                     {% empty %}
