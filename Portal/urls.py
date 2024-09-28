@@ -14,5 +14,6 @@ urlpatterns = [
     path('users/', include('users.urls')),  # Include the contractors app's URLs
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('incident/', include('incident.urls')),
     
 ]

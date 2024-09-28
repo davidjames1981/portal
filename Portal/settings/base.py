@@ -21,6 +21,7 @@ LOGOUT_REDIRECT_URL = '/'
 INSTALLED_APPS = [
     'contractors',
     'users',
+    'incident',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
