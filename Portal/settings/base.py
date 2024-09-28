@@ -9,13 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=jjm^8!+$6q%vw1%kz*gvcb47irb#9l(9o4b-gl(h-lp$%w(lz'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'True'
-
-ALLOWED_HOSTS = ["*"]
 
 
 LOGIN_URL = '/login/'
@@ -48,6 +41,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Portal.urls'
 
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,25 +65,7 @@ WSGI_APPLICATION = 'Portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
-
-database_url = os.environ.get("DATABASE_URL")
-
-DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a.frankfurt-postgres.render.com/db_messaround")
-
-#dj_database_url = os.environ.get("DATABASE_URL")
-
-
-#DATABASES["default"] = dj_database_url.parse(dj_database_url)
-
-
-#DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a.frankfurt-postgres.render.com/db_messaround")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
