@@ -77,10 +77,10 @@
                 <i class="fas fa-home"></i><span>Home</span>
             </a>
             <a href="{% url 'contractors:contractor_create' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'contractor_create' %}active{% endif %}">
-                <i class="fas fa-building"></i><span>Contractors Managment</span>
+                <i class="fas fa-building"></i><span>Contractor Managment</span>
             </a>
             <a href="{% url 'users:user_create' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'user_create' %}active{% endif %}">
-                <i class="fas fa-users"></i><span>Users Managment</span>
+                <i class="fas fa-users"></i><span>User Managment</span>
             </a>
             <a href="{% url 'incident:incident_home' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'incident_home' %}active{% endif %}">
                 <i class="fas fa-exclamation-triangle"></i><span>Incident Reporting</span>
@@ -103,7 +103,7 @@
             {% endif %}
         </div>
     </nav>
-    
+    {% block navbar %}{% endblock %}
     <!-- Page Content -->
     <div id="page-content-wrapper">
         {% block content %}
