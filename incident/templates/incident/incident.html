@@ -1,6 +1,81 @@
 {% extends 'incident/incidents_base.html' %}
 
 {% block content %}
+   <!-- Display Messages -->
+   {% if messages %}
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+       {% for message in messages %}
+           {{ message }}
+       {% endfor %}
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+{% endif %}
+
 <!-- Your specific page content here -->
-<h1>Test</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Report Work Incident</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Report a Work Incident or Accident</h2>
+        <form method="post" action="{% url 'incident:submit_incident' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="incident_type" class="form-label">Incident Type</label>
+                <select class="form-select" id="incident_type" name="incident_type" required>
+                    <option value="">Choose...</option>
+                    <option value="accident">Accident</option>
+                    <option value="near_miss">Near Miss</option>
+                    <option value="injury">Injury</option>
+                    <option value="property_damage">Property Damage</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="incident_date" class="form-label">Incident Date and Time</label>
+                <input type="datetime-local" class="form-control" id="incident_date" name="incident_date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Incident Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="severity" class="form-label">Severity Level</label>
+                <select class="form-select" id="severity" name="severity" required>
+                    <option value="">Choose...</option>
+                    <option value="minor">Minor</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="severe">Severe</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <input type="hidden" id="company" name="company" value="{{ user.profile.company }}">
+                <label for="action_taken" class="form-label">Action Taken</label>
+                <textarea class="form-control" id="action_taken" name="action_taken" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+</body>
+</html>
+
 {% endblock %}

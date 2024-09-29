@@ -82,10 +82,13 @@
             <a href="{% url 'users:user_create' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'user_create' %}active{% endif %}">
                 <i class="fas fa-users"></i><span>User Management</span>
             </a>
+            <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+                <i class="fas fa-tasks"></i><span>Jobs</span>
+            </a>
             <a href="{% url 'incident:incident_home' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'incident_home' %}active{% endif %}">
                 <i class="fas fa-exclamation-triangle"></i><span>Incident Reporting</span>
             </a>            
-            <a href="{% url 'about' %}" class="list-group-item list-group-item-action">
+            <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
                 <i class="fas fa-info-circle"></i><span>About</span>
             </a>
         </div>

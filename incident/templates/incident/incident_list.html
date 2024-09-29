@@ -1,0 +1,74 @@
+{% extends 'incident/incidents_base.html' %}
+
+{% block content %}
+   <!-- Display Messages -->
+   {% if messages %}
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+       {% for message in messages %}
+           {{ message }}
+       {% endfor %}
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+{% endif %}
+
+
+
+<div class="container mt-5">
+    <h2 class="mb-4">Incidents Related to Your Company</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Raised By</th>
+                <th>Incident Type</th>
+                <th>Location</th>
+                <th>Severity</th>
+                <th>Incident Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for incident in incidents %}
+            <tr>
+                <td>{{ incident.reported_by }}</td>
+                <td>{{ incident.get_incident_type_display }}</td>
+                <td>{{ incident.location }}</td>
+                <td>{{ incident.get_severity_display }}</td>
+                <td>{{ incident.incident_date }}</td>
+                <td>{{ incident.description|truncatewords:10 }}</td>
+                <td>
+                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#incidentModal{{ incident.id }}">
+                        View Details
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Modal for incident details -->
+            <div class="modal fade" id="incidentModal{{ incident.id }}" tabindex="-1" aria-labelledby="incidentModalLabel{{ incident.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="incidentModalLabel{{ incident.id }}">Incident Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Incident Type:</strong> {{ incident.get_incident_type_display }}</p>
+                            <p><strong>Location:</strong> {{ incident.location }}</p>
+                            <p><strong>Severity:</strong> {{ incident.get_severity_display }}</p>
+                            <p><strong>Incident Date:</strong> {{ incident.incident_date }}</p>
+                            <p><strong>Description:</strong> {{ incident.description }}</p>
+                            <p><strong>Reported By:</strong> {{ incident.reported_by }}</p>
+                            <p><strong>Action Taken:</strong> {{ incident.action_taken }}</p>
+                            <p><strong>Resolved:</strong> {{ incident.is_resolved|yesno:"Yes,No" }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

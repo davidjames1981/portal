@@ -14,12 +14,7 @@ DEBUG = 'True'
 ALLOWED_HOSTS = ["*"]
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -31,6 +26,6 @@ DATABASES = {
 }
 
 
-database_url = os.environ.get("DATABASE_URL")
+#database_url = os.environ.get("DATABASE_URL")
 
-DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a.frankfurt-postgres.render.com/db_messaround")
+#DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a.frankfurt-postgres.render.com/db_messaround")

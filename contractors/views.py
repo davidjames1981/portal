@@ -27,7 +27,7 @@ def contractor_create_edit(request, contractor_id=None):
                 messages.success(request, 'Contractor updated successfully!')
             else:
                 messages.success(request, 'Contractor added successfully!')
-            return redirect('contractor_create')  # Redirect to contractor list after save
+            return redirect('contractors:contractor_create')  # Redirect to contractor list after save
     else:
         form = ContractorForm(instance=contractor)
 
@@ -45,7 +45,7 @@ def contractor_create(request):
         form = ContractorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('contractor_create')
+            return redirect('contractors:contractor_create')
     else:
         form = ContractorForm()
 
@@ -60,7 +60,7 @@ def contractor_edit(request, pk):
         form = ContractorForm(request.POST, instance=contractor)
         if form.is_valid():
             form.save()
-            return redirect('contractor_list')
+            return redirect('contractors:contractor_list')
     else:
         form = ContractorForm(instance=contractor)
     return render(request, 'contractors/contractor_form.html', {'form': form})
@@ -70,5 +70,5 @@ def contractor_archive(request, pk):
     contractor = get_object_or_404(Contractor, pk=pk)
     contractor.is_archived = True
     contractor.save()
-    return redirect('contractor_create')
+    return redirect('contractors:contractor_create')
 
