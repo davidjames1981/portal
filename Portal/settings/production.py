@@ -25,3 +25,11 @@ DATABASES = {
 database_url = os.environ.get("DATABASE_URL")
 
 DATABASES["default"] = dj_database_url.parse("postgresql://db_messaround_user:ChQ81JOdIj0QWJyLt823vO9qaYa50lyM@dpg-crq6vb52ng1s73e3gjs0-a.frankfurt-postgres.render.com/db_messaround")
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.your-email-provider.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@example.com'
+EMAIL_HOST_PASSWORD = 'your-email-password'

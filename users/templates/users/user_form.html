@@ -52,18 +52,6 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                </div>
-                <div class="col-md-6">
-                    <label for="password_confirm" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="password_confirm" name="password_confirm">
-                </div>
-                <div class="col-md-6">
-                    <label for="is_active" class="form-label">Active</label>
-                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if form.is_active.value %}checked{% endif %}>
-                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">
                         {% if user_obj %}Save Changes{% else %}Add User{% endif %}
@@ -99,6 +87,10 @@
                         <td>
                             <a href="{% url 'users:user_edit' user.id %}" class="btn btn-info btn-sm">Edit</a>
                             <a href="{% url 'users:user_archive' user.id %}" class="btn btn-warning btn-sm">Archive</a>
+                        <form method="post" action="{% url 'users:send_reset_email' user.id %}" style="display:inline;">
+                            {% csrf_token %}
+                         <button type="submit" class="btn btn-warning btn-sm">Password Reset</button>
+                            </form>
                         </td>
                     </tr>
                     {% empty %}
